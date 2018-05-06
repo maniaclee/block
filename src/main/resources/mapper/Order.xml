@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meyou.dao.OrderDao">
+    <sql id="allFields">
+        order_id
+        total_amount
+        myt_amount
+        status
+        currency
+        add_time
+        update_time
+    </sql>
+    <resultMap id="resultMap"  type="map">
+        <result property="orderId" column="order_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="totalAmount" column="total_amount" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="mytAmount" column="myt_amount" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="status" column="status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="currency" column="currency" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="addTime" column="add_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+        <result property="updateTime" column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order
+        (
+        <include refid="allFields"/>
+        )
+        values(
+        #{orderId}
+        #{totalAmount}
+        #{mytAmount}
+        #{status}
+        #{currency}
+        #{addTime}
+        #{updateTime}
+        )
+    </insert>
+    <select id="selectByOrderId" resultMap="resultMap">
+        select
+        <include refid="allFields"/>
+        from order
+        where
+        order_id = #{orderId}
+        limit 1
+    </select>
+</mapper>

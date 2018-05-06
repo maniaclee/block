@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meyou.dao.UserDao">
+    <sql id="allFields">
+        user_id
+        name
+        sex
+        email
+        phone
+        level
+        image_url
+        role
+        enabled
+        password
+        add_time
+        update_time
+    </sql>
+    <resultMap id="resultMap"  type="map">
+        <result property="userId" column="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" javaType="java.lang.Integer" jdbcType="SMALLINT"/>
+        <result property="email" column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="level" column="level" javaType="java.lang.Integer" jdbcType="INT"/>
+        <result property="imageUrl" column="image_url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="role" column="role" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="enabled" column="enabled" javaType="java.lang.Integer" jdbcType="SMALLINT"/>
+        <result property="password" column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="addTime" column="add_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+        <result property="updateTime" column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user
+        (
+        <include refid="allFields"/>
+        )
+        values(
+        #{userId}
+        #{name}
+        #{sex}
+        #{email}
+        #{phone}
+        #{level}
+        #{imageUrl}
+        #{role}
+        #{enabled}
+        #{password}
+        #{addTime}
+        #{updateTime}
+        )
+    </insert>
+    <select id="selectByUserId" resultMap="resultMap">
+        select
+        <include refid="allFields"/>
+        from user
+        where
+        user_id = #{userId}
+        limit 1
+    </select>
+    <select id="selectByEmail" resultType="com.meyou.entity.UserEntity">
+        select * from user where email= #{email}
+    </select>
+</mapper>
